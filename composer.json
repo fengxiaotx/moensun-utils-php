@@ -1,0 +1,19 @@
+{
+    "name": "moensun/utils",
+    "description": "moensun-utils-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bane.Shi",
+            "email": "fengxiaotx@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload":{
+        "psr-4":{
+            "MoenSun\\MSUtils\\":"src/MoenSun/MSUtils/"
+        }
+    }
+}
