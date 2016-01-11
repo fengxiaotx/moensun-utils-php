@@ -10,6 +10,8 @@
 namespace MoenSun\MSUtils\http;
 
 
+use MoenSun\MSUtils\http\request\MSRequestEntity;
+
 class MSHttpRequest
 {
     /**
