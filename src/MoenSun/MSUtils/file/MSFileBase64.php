@@ -13,39 +13,50 @@ namespace MoenSun\MSUtils\file;
 class MSFileBase64
 {
     public static function isBase64($str){
-        return preg_match("/^value:.*?;base64,/",$str);
+        return preg_match("/^data:.*?;base64,/",$str);
+    }
+
+    public static function isImage($str){
+        return preg_match("/^data:image\/.*/",$str);
     }
 
     public static function decode($str){
-        return base64_decode(preg_replace("/^value:.*?\/.*?;base64,/","",$str));
+        return base64_decode(preg_replace("/^data:.*?\/.*?;base64,/","",$str));
     }
 
-    public static function head($str){
-        return substr($str,0,strpos($str,";"));
+
+    public static function prefix($str){
+        if(preg_match("/^data:.*?;base64,/",$str,$out)){
+            return $out[0];
+        }else {
+            return "";
+        }
     }
 
     public static function type($str){
-        $head=self::head($str);
-        $type=null;
-        if($head){
-            $type=substr($head, strpos($head,"/")+1);
-            switch ($type){
-                case "jpeg":
-                    $type="jpg";
-                    break;
-                default:
-                    break;
+        $type = null;
+        $prefix = self::prefix($str);
+        if($prefix){
+            if(preg_match("/(^data:)(.*?)(\/.*?;)/",$prefix,$out)){
+                if(isset($out[2])){
+                    $type = $out[2];
+                }
             }
         }
         return $type;
     }
 
     public static function extension($str){
-        $head=self::head($str);
-        $extension=null;
-        if($head){
-            $extension=substr($head, strpos($head,":")+1,strpos($head,":")+1);
+        $extension = "";
+        $prefix = self::prefix($str);
+        if($prefix){
+            if(preg_match("/(^data:.*?\/)(.*?)(;.*?)/",$prefix,$out)){
+                if(isset($out[2])){
+                    $extension = $out[2];
+                }
+            }
         }
         return $extension;
     }
+
 }
