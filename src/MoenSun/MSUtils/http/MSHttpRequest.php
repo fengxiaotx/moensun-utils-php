@@ -32,12 +32,20 @@ class MSHttpRequest
     }
 
     /**
-     * 以对象的形式返回 取值的时候用 -> 这样可以忽略到 没有Key的情况
+     * 获取的是post的json，以对象的形式返回 取值的时候用 -> 这样可以忽略到 没有Key的情况
      * @return MSRequestEntity
      */
     public static function getPostDataEntity(){
         $data = json_decode(self::getPostData(),true);
         return new MSRequestEntity($data);
+    }
+
+    /**
+     * 获取的是post的form提交的所有数据
+     * @return MSRequestEntity
+     */
+    public static function getPostFormEntity(){
+        return new MSRequestEntity($_POST);
     }
 
     public static function getParam($key,$isRequired = false){
