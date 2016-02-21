@@ -13,7 +13,7 @@ namespace MoenSun\MSUtils\value;
 class MSValueCheck
 {
     public static function isSqlCondition($value){
-        if($value || $value == 0 || $value == "0"){
+        if($value ||  $value == "0" || is_int($value)){
             return true;
         }
         return false;
