@@ -48,7 +48,6 @@ class MSValueCompute
      */
     public static function getStartPage($count,$pageSize,$currentPage,$pageShowCount){
         $pageCount = self::getPageCount($count,$pageSize);
-        echo $pageCount."|";
         if($currentPage <= $pageShowCount){
             return 1;
         }elseif($currentPage>$pageCount){
@@ -73,8 +72,10 @@ class MSValueCompute
             }else {
                 return $pageShowCount;
             }
-        }elseif( $end = $currentPage+( ($currentPage%$pageShowCount == 0)? 0:($pageShowCount-$currentPage%$pageShowCount) ) ){
-            echo $end;
+        }elseif( $currentPage>$pageCount ){
+            return $pageCount;
+        }else {
+            $end = $currentPage+( ($currentPage%$pageShowCount == 0)? 0:($pageShowCount-$currentPage%$pageShowCount) );
             if($end >= $pageCount){
                 return $pageCount;
             }else {
