@@ -37,32 +37,44 @@ class MSValueCompute
         }
     }
 
+
     /**
-     * 列表页的分页菜单的起始页
-     * @param $currentPage
+     * 获取页面分页按钮的起始页
+     * @param $count
      * @param $pageSize
+     * @param $currentPage
+     * @param $pageShowCount
      * @return int
      */
-    public static function getStartPage($currentPage,$pageSize){
-        if($currentPage <= $pageSize){
+    public static function getStartPage($count,$pageSize,$currentPage,$pageShowCount){
+        $pageCount = self::getPageCount($count,$pageSize);
+        echo $pageCount."|";
+        if($currentPage <= $pageShowCount){
             return 1;
-        }else {
-            return  $currentPage -($currentPage%$pageSize-1) ;
+        }elseif($currentPage>$pageCount){
+            return  $pageCount -( ($pageCount%$pageShowCount == 0)?$pageShowCount :($pageCount%$pageShowCount-1)) ;
+        } else {
+            return  $currentPage -( ($currentPage%$pageShowCount == 0)?$pageShowCount :($currentPage%$pageShowCount-1)) ;
         }
     }
 
-    /**
-     * 列表页分页菜单的结束页
+    /**获取页面分页按钮的结束页
      * @param $count
-     * @param $currentPage
      * @param $pageSize
+     * @param $currentPage
+     * @param $pageShowCount
      * @return int
      */
-    public static function getEndPage($count,$currentPage,$pageSize){
+    public static function getEndPage($count,$pageSize,$currentPage,$pageShowCount){
         $pageCount = self::getPageCount($count,$pageSize);
-        if($currentPage <= $pageSize ){
-            return $pageSize;
-        }elseif( $end = $currentPage+( $pageSize- ($currentPage%$pageSize)) ){
+        if($currentPage <= $pageShowCount ){
+            if( $pageCount<= $pageShowCount){
+                return $pageCount;
+            }else {
+                return $pageShowCount;
+            }
+        }elseif( $end = $currentPage+( ($currentPage%$pageShowCount == 0)? 0:($pageShowCount-$currentPage%$pageShowCount) ) ){
+            echo $end;
             if($end >= $pageCount){
                 return $pageCount;
             }else {
