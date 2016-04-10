@@ -12,6 +12,16 @@ namespace MoenSun\MSUtils\value;
 
 class MSTree
 {
+	/**
+	 * 创建一个适用于EXTJS的树形数组
+	 * @param $array
+	 * @param $pidVal
+	 * @param $idField
+	 * @param $pidField
+	 * @param string $folderIcon
+	 * @param string $fileIcon
+	 * @return array
+	 */
 	public static function createTreeExtjs($array,$pidVal,$idField,$pidField,$folderIcon="",$fileIcon="")
 	{
 		$newArray=array();
@@ -40,6 +50,13 @@ class MSTree
 		return  $newArray;
 	}
 
+	/**
+	 * @param $array
+	 * @param $pidVal
+	 * @param $idField
+	 * @param $pidField
+	 * @return array
+	 */
 	public static function createTree($array,$pidVal,$idField,$pidField){
 		$newArray=array();
 		if(count($array)>0){
@@ -89,5 +106,42 @@ class MSTree
 		}
 		return array_reverse($arr);
 	}
+
+	/**
+	 * 将带有层级关系的数组转换成树形结构的数组
+	 * @param $array 需要转换的数组
+	 * @param string $pidVal 父级ID的值
+	 * @param $idField ID的字段名
+	 * @param $pidField 父级ID的字段名
+	 * @param $textField 显示的字段名
+	 * @param int $level 级别
+	 * @return array
+	 */
+	public static function treeList($array,$pidVal = "0",$idField,$pidField,$textField,$level = 1){
+		$newArray = [];
+		$space = "";
+
+		if($level>1){
+			for($i=1;$i<$level;$i++){
+				$space.="&nbsp;&nbsp;&nbsp;";
+			}
+		}
+
+		foreach ($array as $k=>$v){
+			if($array[$k][$pidField] == $pidVal){
+				$array[$k][$textField] = $space.$array[$k][$textField];
+				array_push($newArray,$array[$k]);
+				$children = self::treeList($array,$array[$k]["ac_id"],"ac_id","ac_pid",$textField,$level+1);
+				if(count($children)){
+					foreach ($children as $child){
+						array_push($newArray,$child);
+					}
+				}
+			}
+		}
+
+		return $newArray;
+	}
+
 
 }
