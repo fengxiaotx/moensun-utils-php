@@ -114,16 +114,17 @@ class MSTree
 	 * @param $idField ID的字段名
 	 * @param $pidField 父级ID的字段名
 	 * @param $textField 显示的字段名
+	 * @param $placeholder 占位符
 	 * @param int $level 级别
 	 * @return array
 	 */
-	public static function treeList($array,$pidVal = "0",$idField,$pidField,$textField,$level = 1){
+	public static function treeList($array,$pidVal = "0",$idField,$pidField,$textField,$placeholder ="",$level = 1){
 		$newArray = [];
 		$space = "";
 
 		if($level>1){
 			for($i=1;$i<$level;$i++){
-				$space.="&nbsp;&nbsp;&nbsp;";
+				$space.= $placeholder;
 			}
 		}
 
@@ -131,7 +132,7 @@ class MSTree
 			if($array[$k][$pidField] == $pidVal){
 				$array[$k][$textField] = $space.$array[$k][$textField];
 				array_push($newArray,$array[$k]);
-				$children = self::treeList($array,$array[$k]["ac_id"],"ac_id","ac_pid",$textField,$level+1);
+				$children = self::treeList($array,$array[$k]["ac_id"],"ac_id","ac_pid",$textField,$placeholder,$level+1);
 				if(count($children)){
 					foreach ($children as $child){
 						array_push($newArray,$child);
