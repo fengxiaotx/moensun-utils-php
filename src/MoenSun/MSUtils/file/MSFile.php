@@ -19,14 +19,7 @@ class MSFile
      * @return null|string
      */
     public static function getExtension($val){
-        $returnStr=null;
-        if($val){
-            $array=explode(".",$val);
-            if(count($array)>0){
-                $returnStr=".".$array[count($array)-1];
-            }
-        }
-        return $returnStr;
+        return strtolower(substr($val,strrpos($val,'.')+1));
     }
 
     public static function datePath($fileName,$prefix = ''){
@@ -43,7 +36,12 @@ class MSFile
         return $extension;
     }
 
-    public static function randomFileName($type){
-        return MSRandom::getUUID().'.'.self::getExtensionByType($type);
+    public static function randomFileName($fileName){
+        return MSRandom::getUUID().'.'.self::getExtension($fileName);
     }
+
+    public static function getFileTypeByMimeType($type){
+        return strtolower(substr($type,0,strpos($type,'/')-1));
+    }
+
 }
