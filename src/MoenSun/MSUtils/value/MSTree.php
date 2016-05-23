@@ -132,7 +132,7 @@ class MSTree
 			if($array[$k][$pidField] == $pidVal){
 				$array[$k][$textField] = $space.$array[$k][$textField];
 				array_push($newArray,$array[$k]);
-				$children = self::treeList($array,$array[$k]["ac_id"],"ac_id","ac_pid",$textField,$placeholder,$level+1);
+				$children = self::treeList($array,$array[$k][$idField],$idField,$pidField,$textField,$placeholder,$level+1);
 				if(count($children)){
 					foreach ($children as $child){
 						array_push($newArray,$child);
