@@ -25,7 +25,7 @@ class MSFile
     public static function datePath($fileName,$prefix = ''){
         $d = explode('-',date('Y-y-m-d-H-i-s'));
         $fileName = preg_replace("/[\|\?\"\<\>\/\*\\\\]+/", '', $fileName);
-        return str_replace('//','/',$prefix.$d[0].'/'.$d[2].'/').$fileName;
+        return str_replace('//','/',$prefix."/".$d[0].'/'.$d[2].'/').$fileName;
     }
 
     public static function getExtensionByType($type){
