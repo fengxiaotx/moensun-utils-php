@@ -10,6 +10,8 @@
 namespace MoenSun\MSUtils\file;
 
 
+use MoenSun\MSUtils\random\MSRandom;
+
 class MSFileBase64
 {
     public static function isBase64($str){
@@ -57,6 +59,10 @@ class MSFileBase64
             }
         }
         return $extension;
+    }
+
+    public static function randomFileName($str){
+        return MSRandom::getUUID().".".self::extension($str);
     }
 
 }
