@@ -10,6 +10,7 @@
 namespace MoenSun\MSUtils\http;
 
 
+use Illuminate\Http\Request;
 use MoenSun\MSUtils\http\request\MSRequestEntity;
 
 class MSHttpRequest
@@ -19,7 +20,9 @@ class MSHttpRequest
      * @return string
      */
     public static function getPostData(){
-        return file_get_contents("php://input");
+        //return file_get_contents("php://input");
+		$request = new Request();
+		return $request->getContent();
     }
 
     /**
